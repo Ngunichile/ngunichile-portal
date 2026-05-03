@@ -5,142 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ngunichile Secondary School | Portal</title>
     <style>
-        :root { --bluu: #002366; --dhahabu: #ffcc00; --background: #f4f7f6; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: var(--background); color: #333; line-height: 1.6; }
+        :root { --p: #002366; --g: #ffcc00; --s: #f1f5f9; --w: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--s); color: #333; }
         
-        /* Sehemu ya Juu (Header) */
-        header { background: var(--bluu); color: white; padding: 10px 5%; border-bottom: 3px solid var(--dhahabu); }
-        .top-info { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 10px; opacity: 0.9; }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { font-size: 1.5rem; color: var(--dhahabu); }
-        .nav-links { display: flex; align-items: center; }
-        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; font-size: 0.9rem; }
-        .admin-btn { background: var(--dhahabu); color: var(--bluu) !important; padding: 5px 15px; border-radius: 5px; cursor: pointer; margin-left: 20px; }
+        header { background: var(--p); color: white; border-bottom: 4px solid var(--g); position: sticky; top: 0; z-index: 100; }
+        .top-bar { background: #001a4d; padding: 8px 5%; display: flex; justify-content: space-between; font-size: 13px; }
+        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { color: var(--g); font-size: 1.8rem; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 15px; font-weight: 600; font-size: 14px; }
+        .admin-btn { background: var(--g); color: var(--p) !important; padding: 6px 15px; border-radius: 5px; cursor: pointer; }
 
-        /* Sehemu ya Kati (Hero) */
-        .hero { background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1000&q=80'); 
-                background-size: cover; background-position: center; color: white; padding: 80px 20px; text-align: center; }
-        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
-
-        /* Sehemu ya Taarifa (Cards) */
-        .main-content { max-width: 1000px; margin: -40px auto 40px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card h3 { color: var(--bluu); border-bottom: 2px solid var(--dhahabu); margin-bottom: 15px; padding-bottom: 5px; }
-
-        footer { text-align: center; padding: 30px; background: #222; color: white; font-size: 0.9rem; }
+        .hero { height: 50vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000'); 
+                background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px; }
         
-        /* Modal ya Admin */
-        #adminModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
-        .modal-body { background: white; width: 90%; max-width: 500px; margin: 10% auto; padding: 30px; border-radius: 10px; }
-        .modal-body h2 { margin-bottom: 20px; color: var(--bluu); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        .save-btn { background: var(--bluu); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--w); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .card h3 { color: var(--p); border-bottom: 2px solid var(--g); margin-bottom: 15px; padding-bottom: 5px; }
+        .content-area { white-space: pre-wrap; font-size: 15px; }
+
+        footer { background: #111; color: white; padding: 40px 5%; text-align: center; margin-top: 50px; }
+        .socials a { color: var(--g); margin: 0 10px; text-decoration: none; font-weight: bold; }
+
+        /* Admin Modal */
+        #adminModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; }
+        .modal-content { background: white; width: 95%; max-width: 700px; margin: 20px auto; padding: 25px; border-radius: 10px; }
+        .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .f-group { margin-bottom: 10px; }
+        label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 4px; color: var(--p); }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+        .full { grid-column: 1 / -1; }
+        .save-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="top-info">
-        <div>📍 <span id="dAddress">P.O. Box 10, Nachingwea</span></div>
-        <div>INDEX: <span id="dIndex">S4321</span></div>
+    <div class="top-bar">
+        <div>📍 <span id="dAddr">P.O. Box 10, Nachingwea</span> | 📧 <span id="dEmail">info@ngunichile.sc.tz</span></div>
+        <div>INDEX: <span id="dIdx">S4321</span></div>
     </div>
     <nav>
-        <div class="logo">
-            <h1 id="dSchoolName">NGUNICHILE SEC</h1>
-        </div>
+        <div class="logo"><h1 id="dSchName">NGUNICHILE SEC</h1></div>
         <div class="nav-links">
-            <a href="Ngunichile_Final_System.html" style="color: var(--dhahabu);">RIPOTI PORTAL</a>
-            <span class="admin-btn" onclick="openAdmin()">ADMIN</span>
+            <a href="Ngunichile_Final_System.html" style="color:var(--g)">RIPOTI</a>
+            <span class="admin-btn" onclick="openAdmin()">ADMIN PANEL</span>
         </div>
     </nav>
 </header>
 
-<div class="hero">
-    <h2 id="dWelcome">Karibu Ngunichile Secondary School</h2>
-    <p>Elimu ni Mwanga wa Maisha na Msingi wa Mafanikio.</p>
+<div class="hero" id="dHero">
+    <h2 id="dWelcome" style="font-size: 2.5rem;">Karibu Ngunichile Secondary</h2>
+    <p id="dSlogan">Elimu ni Mwanga wa Maisha</p>
 </div>
 
-<div class="main-content">
+<div class="container">
     <div class="card">
         <h3>⏰ Ratiba ya Shule</h3>
-        <p>Vipindi huanza saa 02:00 asubuhi mpaka saa 09:30 alasiri. Hakikisha unawahi shuleni!</p>
+        <div id="dTimetable" class="content-area">Pakia ratiba hapa...</div>
     </div>
     <div class="card">
-        <h3>📅 Matukio</h3>
-        <p>Mitihani ya Katikati ya Muhula itaanza wiki ijayo. Wanafunzi wote jiandaeni vyema.</p>
+        <h3>📅 Kalenda ya Mwaka</h3>
+        <div id="dCalendar" class="content-area">Pakia matukio hapa...</div>
+    </div>
+    <div class="card">
+        <h3>👥 Walimu wa Zamu</h3>
+        <div id="dDuty" class="content-area">Weka walimu wa wiki hii...</div>
+    </div>
+    <div class="card">
+        <h3>👨‍🏫 Idara ya Walimu</h3>
+        <div id="dStaff" class="content-area">Orodha ya walimu wote...</div>
+    </div>
+    <div class="card" style="grid-column: 1 / -1;">
+        <h3>🎵 Wimbo wa Shule</h3>
+        <div id="dSong" class="content-area" style="text-align: center; font-style: italic;">Andika mashairi ya wimbo wa shule hapa...</div>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2026 Ngunichile Secondary School. Haki zote zimehifadhiwa.</p>
+    <div class="socials">
+        <a id="lnkFb" href="#">Facebook</a> | 
+        <a id="lnkInsta" href="#">Instagram</a> | 
+        <a id="lnkWa" href="#">WhatsApp</a>
+    </div>
+    <p style="margin-top:20px; opacity:0.6">&copy; 2026 Ngunichile Secondary School. Haki zote zimehifadhiwa.</p>
 </footer>
 
 <div id="adminModal">
-    <div class="modal-body">
-        <h2>Panel ya Mwalimu</h2>
-        <div class="form-group">
-            <label>Anwani (P.O. Box):</label>
-            <input type="text" id="iAddress">
+    <div class="modal-content">
+        <h2 style="color:var(--p)">Matengenezo ya Website</h2>
+        <hr><br>
+        <div class="grid-form">
+            <div class="f-group"><label>Jina la Shule:</label><input type="text" id="iSchName"></div>
+            <div class="f-group"><label>Index Number:</label><input type="text" id="iIdx"></div>
+            <div class="f-group"><label>Anwani (P.O. Box):</label><input type="text" id="iAddr"></div>
+            <div class="f-group"><label>Email ya Shule:</label><input type="text" id="iEmail"></div>
+            <div class="f-group"><label>Link ya Picha (Background):</label><input type="text" id="iHero" placeholder="https://picha.com/shule.jpg"></div>
+            <div class="f-group"><label>Link ya Instagram:</label><input type="text" id="iInsta"></div>
+            <div class="f-group"><label>Link ya Facebook:</label><input type="text" id="iFb"></div>
+            <div class="f-group"><label>Namba ya WhatsApp:</label><input type="text" id="iWa"></div>
+            
+            <div class="f-group full"><label>Ratiba ya Shule:</label><textarea id="iTimetable" rows="4"></textarea></div>
+            <div class="f-group full"><label>Kalenda ya Matukio:</label><textarea id="iCalendar" rows="4"></textarea></div>
+            <div class="f-group full"><label>Walimu wa Zamu:</label><textarea id="iDuty" rows="2"></textarea></div>
+            <div class="f-group full"><label>Orodha ya Walimu Wote:</label><textarea id="iStaff" rows="4"></textarea></div>
+            <div class="f-group full"><label>Wimbo wa Shule:</label><textarea id="iSong" rows="5"></textarea></div>
         </div>
-        <div class="form-group">
-            <label>Namba ya Index:</label>
-            <input type="text" id="iIndex">
-        </div>
-        <button class="save-btn" onclick="saveData()">HIFADHI MABADILIKO</button>
-        <button onclick="closeAdmin()" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer;">Funga</button>
+        <button class="save-btn" onclick="saveAll()">HIFADHI KILA KITU</button>
+        <button onclick="closeAdmin()" style="width:100%; background:none; border:none; color:red; margin-top:10px; cursor:pointer;">Funga Bila Kuhifadhi</button>
     </div>
 </div>
 
 <script>
-    // Fungua Admin Panel
     function openAdmin() {
-        let pass = prompt("Ingiza Password ya Mwalimu:");
-        if(pass === "1234") {
+        if(prompt("Ingiza Password:") === "1234") {
             document.getElementById('adminModal').style.display = 'block';
-            // Jaza data za sasa kwenye maboksi
-            document.getElementById('iAddress').value = document.getElementById('dAddress').innerText;
-            document.getElementById('iIndex').value = document.getElementById('dIndex').innerText;
-        } else {
-            alert("Password si sahihi, Mwalimu Martini.");
-        }
+            loadInputs();
+        } else { alert("Huruhusiwi!"); }
     }
+    function closeAdmin() { document.getElementById('adminModal').style.display = 'none'; }
 
-    // Funga Admin Panel
-    function closeAdmin() {
-        document.getElementById('adminModal').style.display = 'none';
-    }
-
-    // Hifadhi Data
-    function saveData() {
-        let box = document.getElementById('iAddress').value;
-        let idx = document.getElementById('iIndex').value;
-
-        // Hifadhi kwenye Memory ya Simu/PC (LocalStorage)
-        localStorage.setItem('sch_box', box);
-        localStorage.setItem('sch_idx', idx);
-
-        // Onyesha mabadiliko hapo hapo
-        updateUI(box, idx);
-        
+    function saveAll() {
+        const d = {
+            name: document.getElementById('iSchName').value,
+            idx: document.getElementById('iIdx').value,
+            addr: document.getElementById('iAddr').value,
+            email: document.getElementById('iEmail').value,
+            hero: document.getElementById('iHero').value,
+            insta: document.getElementById('iInsta').value,
+            fb: document.getElementById('iFb').value,
+            wa: document.getElementById('iWa').value,
+            timetable: document.getElementById('iTimetable').value,
+            calendar: document.getElementById('iCalendar').value,
+            duty: document.getElementById('iDuty').value,
+            staff: document.getElementById('iStaff').value,
+            song: document.getElementById('iSong').value
+        };
+        localStorage.setItem('ngunichile_master_data', JSON.stringify(d));
+        renderUI(d);
         closeAdmin();
-        alert("Hongera! Taarifa zimesasishwa kikamilifu.");
+        alert("Hongera! Website imesasishwa.");
     }
 
-    function updateUI(b, i) {
-        if(b) document.getElementById('dAddress').innerText = b;
-        if(i) document.getElementById('dIndex').innerText = i;
+    function loadInputs() {
+        const s = JSON.parse(localStorage.getItem('ngunichile_master_data')) || {};
+        document.getElementById('iSchName').value = s.name || "NGUNICHILE SEC";
+        document.getElementById('iIdx').value = s.idx || "S4321";
+        document.getElementById('iAddr').value = s.addr || "P.O. Box 10, Nachingwea";
+        document.getElementById('iEmail').value = s.email || "info@ngunichile.sc.tz";
+        document.getElementById('iHero').value = s.hero || "";
+        document.getElementById('iInsta').value = s.insta || "";
+        document.getElementById('iFb').value = s.fb || "";
+        document.getElementById('iWa').value = s.wa || "";
+        document.getElementById('iTimetable').value = s.timetable || "";
+        document.getElementById('iCalendar').value = s.calendar || "";
+        document.getElementById('iDuty').value = s.duty || "";
+        document.getElementById('iStaff').value = s.staff || "";
+        document.getElementById('iSong').value = s.song || "";
     }
 
-    // Pakia data zilizohifadhiwa ukurasa unapofunguka
-    window.onload = function() {
-        let b = localStorage.getItem('sch_box');
-        let i = localStorage.getItem('sch_idx');
-        if(b || i) updateUI(b, i);
+    function renderUI(s) {
+        if(!s) return;
+        document.getElementById('dSchName').innerText = s.name;
+        document.getElementById('dIdx').innerText = s.idx;
+        document.getElementById('dAddr').innerText = s.addr;
+        document.getElementById('dEmail').innerText = s.email;
+        if(s.hero) document.getElementById('dHero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${s.hero}')`;
+        document.getElementById('dTimetable').innerText = s.timetable;
+        document.getElementById('dCalendar').innerText = s.calendar;
+        document.getElementById('dDuty').innerText = s.duty;
+        document.getElementById('dStaff').innerText = s.staff;
+        document.getElementById('dSong').innerText = s.song;
+        document.getElementById('lnkFb').href = s.fb || "#";
+        document.getElementById('lnkInsta').href = s.insta || "#";
+        document.getElementById('lnkWa').href = s.wa ? `https://wa.me/${s.wa}` : "#";
     }
+
+    window.onload = () => renderUI(JSON.parse(localStorage.getItem('ngunichile_master_data')));
 </script>
-
 </body>
 </html>
