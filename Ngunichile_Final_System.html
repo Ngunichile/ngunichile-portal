@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <title>Ngunichile Academic System V4 - EDK Edition</title>
+    <style>
+        :root { --primary: #002244; --accent: #1e7e34; --bg: #f0f4f8; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--bg); }
+        
+        .no-print { background: var(--primary); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .nav-grid { max-width: 1400px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; align-items: center; }
+        
+        .btn { padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s; }
+        .btn-save { background: #ffc107; color: #000; }
+        .btn-print { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+
+        .container { padding: 20px; max-width: 1500px; margin: auto; }
+        .card { background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow-x: auto; }
+
+        table.entry-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        table.entry-table th { background: #e9ecef; padding: 10px; border: 1px solid #dee2e6; color: #333; }
+        table.entry-table td { border: 1px solid #eee; padding: 5px; text-align: center; }
+        
+        .input-name { width: 180px; padding: 6px; border: 1px solid #ccc; border-radius: 3px; font-weight: bold; }
+        .input-score { width: 35px; padding: 4px; text-align: center; border: 1px solid #ddd; }
+        .current-class-label { background: #fff; color: #000; padding: 5px 10px; border-radius: 4px; font-weight: bold; text-align: center; }
+
+        /* Report Styles */
+        .report-page { display: none; width: 210mm; min-height: 297mm; padding: 15mm; margin: 5mm auto; background: white; border: 1px solid #000; page-break-after: always; }
+        .rep-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+        table.rep-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table.rep-table th, table.rep-table td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 14px; }
+        .summary-box { border: 2px solid #000; margin-top: 15px; padding: 10px; display: flex; justify-content: space-around; font-weight: bold; background: #f0f0f0; }
+
+        @media print {
+            .no-print { display: none !important; }
+            .report-page { display: block !important; border: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="no-print">
+    <div class="nav-grid">
+        <div style="font-weight: bold; font-size: 14px;">NGUNICHILE SYSTEM V4</div>
+        
+        <select id="reportType" onchange="loadClassData()">
+            <option value="MID">NUSU MHULA (TEST + MID)</option>
+            <option value="ANN">MHULA KAMILI (MID + ANN)</option>
+        </select>
+
+        <select id="classLevel" onchange="loadClassData()" style="background: #fff; font-weight: bold;">
+            <option value="F1">FORM ONE</option>
+            <option value="F2">FORM TWO</option>
+            <option value="F3">FORM THREE</option>
+            <option value="F4">FORM FOUR</option>
+        </select>
+
+        <button class="btn btn-save" onclick="saveAllToStorage()">💾 SAVE ALL DATA</button>
+        <button class="btn btn-print" onclick="generateReports()">🖨️ PRINT REPORTS</button>
+        <button class="btn btn-danger" onclick="clearClassData()">FUTA DARASA HILI</button>
+    </div>
+</div>
+
+<div class="container no-print">
+    <div id="statusMsg" style="color: green; font-weight: bold; text-align: center; margin-bottom: 10px;"></div>
+    <div class="card">
+        <table class="entry-table">
+            <thead>
+                <tr id="headerRow">
+                    <th>SN</th><th>Jina la Mwanafunzi</th>
+                </tr>
+            </thead>
+            <tbody id="entryBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+    // Somo la EDK limeongezwa hapa
+    const subjects = ["Math", "English", "Civics", "Geography", "History", "Biology", "Chemistry", "Physics", "Kiswahili", "Literature", "EDK"];
+    const totalStudents = 56;
+
+    // Header Setup
+    const headerRow = document.getElementById('headerRow');
+    subjects.forEach(sub => {
+        let th = document.createElement('th');
+        th.innerHTML = `${sub.toUpperCase()}<br><small>1 | 2</small>`;
+        headerRow.appendChild(th);
+    });
+
+    // Main Storage Object
+    // Muundo: { "F1": { 1: {name: "", scores: []}, ... }, "F2": {...} }
+    let db = JSON.parse(localStorage.getItem('ngunichile_v4_db')) || { "F1": {}, "F2": {}, "F3": {}, "F4": {} };
+
+    function loadClassData() {
+        const currentClass = document.getElementById('classLevel').value;
+        const tbody = document.getElementById('entryBody');
+        tbody.innerHTML = "";
+
+        const classData = db[currentClass] || {};
+
+        for (let i = 1; i <= totalStudents; i++) {
+            let s = classData[i] || { name: "", scores: Array(subjects.length).fill({t1:"", t2:""}) };
+            let row = `<tr data-id="${i}">
+                <td>${i}</td>
+                <td><input type="text" class="input-name" value="${s.name}" placeholder="Andika Jina"></td>`;
+            
+            subjects.forEach((_, j) => {
+                let sc = s.scores[j] || {t1:"", t2:""};
+                row += `<td>
+                    <input type="number" class="input-score t1" value="${sc.t1}">
+                    <input type="number" class="input-score t2" value="${sc.t2}">
+                </td>`;
+            });
+            row += "</tr>";
+            tbody.innerHTML += row;
+        }
+        document.getElementById('statusMsg').innerText = "Data za " + currentClass + " zimepakiwa!";
+    }
+
+    function saveAllToStorage() {
+        const currentClass = document.getElementById('classLevel').value;
+        const rows = document.querySelectorAll('#entryBody tr');
+        
+        let classData = {};
+        rows.forEach(row => {
+            const id = row.getAttribute('data-id');
+            const name = row.querySelector('.input-name').value;
+            const t1s = row.querySelectorAll('.t1');
+            const t2s = row.querySelectorAll('.t2');
+            
+            let scores = [];
+            t1s.forEach((t1, i) => {
+                scores.push({ t1: t1.value, t2: t2s[i].value });
+            });
+            classData[id] = { name, scores };
+        });
+
+        db[currentClass] = classData;
+        localStorage.setItem('ngunichile_v4_db', JSON.stringify(db));
+        
+        document.getElementById('statusMsg').innerText = "✅ DATA ZOTE ZA " + currentClass + " ZIMESIVIWA!";
+        setTimeout(() => { document.getElementById('statusMsg').innerText = ""; }, 3000);
+    }
+
+    function clearClassData() {
+        if(confirm("Je, una uhakika wa kufuta wanafunzi wote wa darasa hili?")) {
+            const currentClass = document.getElementById('classLevel').value;
+            db[currentClass] = {};
+            localStorage.setItem('ngunichile_v4_db', JSON.stringify(db));
+            loadClassData();
+        }
+    }
+
+    function getGrade(avg) {
+        if(avg >= 75) return 'A'; if(avg >= 65) return 'B';
+        if(avg >= 45) return 'C'; if(avg >= 30) return 'D';
+        return 'F';
+    }
+
+    function generateReports() {
+        // Hakikisha tunasave kabla ya kuprint
+        saveAllToStorage();
+
+        const area = document.getElementById('printArea');
+        area.innerHTML = "";
+        const type = document.getElementById('reportType').value;
+        const currentClass = document.getElementById('classLevel').value;
+        const classFullNames = {"F1":"FORM ONE", "F2":"FORM TWO", "F3":"FORM THREE", "F4":"FORM FOUR"};
+        
+        let students = [];
+        const data = db[currentClass];
+
+        Object.keys(data).forEach(k => {
+            if(!data[k].name) return;
+            let total = 0, pts = [];
+            let res = data[k].scores.map((sc, i) => {
+                let s1 = parseFloat(sc.t1) || 0;
+                let s2 = parseFloat(sc.t2) || 0;
+                let avg = (s1 + s2) / 2;
+                let g = getGrade(avg);
+                total += avg;
+                pts.push(g==='A'?1:g==='B'?2:g==='C'?3:g==='D'?4:5);
+                return { sub: subjects[i], s1, s2, avg, g };
+            });
+            pts.sort((a,b)=>a-b);
+            let b7 = pts.slice(0,7).reduce((a,b)=>a+b, 0);
+            students.push({ ...data[k], res, total, b7, avg: (total/subjects.length).toFixed(1) });
+        });
+
+        students.sort((a,b) => b.total - a.total);
+
+        students.forEach((s, idx) => {
+            let div = s.b7 <= 17 ? "I" : s.b7 <= 22 ? "II" : s.b7 <= 25 ? "III" : s.b7 <= 33 ? "IV" : "0";
+            let l1 = type === "MID" ? "TEST" : "MIDTERM";
+            let l2 = type === "MID" ? "MIDTERM" : "ANNUAL";
+
+            area.innerHTML += `
+                <div class="report-page">
+                    <div class="rep-header">
+                        <div>TAMISEMI - HALMASHAURI YA WILAYA MASASI</div>
+                        <div style="font-size:22px; font-weight:bold;">NGUNICHILE SECONDARY SCHOOL</div>
+                        <b>ACADEMIC REPORT - ${classFullNames[currentClass]}</b>
+                    </div>
+                    <p><b>STUDENT NAME:</b> ${s.name.toUpperCase()} <span style="float:right"><b>POSITION:</b> ${idx+1} / ${students.length}</span></p>
+                    <table class="rep-table">
+                        <thead><tr><th>SUBJECT</th><th>${l1}</th><th>${l2}</th><th>AVERAGE</th><th>GRADE</th></tr></thead>
+                        <tbody>${s.res.map(r => `<tr><td style="text-align:left">${r.sub.toUpperCase()}</td><td>${r.s1}</td><td>${r.s2}</td><td>${r.avg.toFixed(1)}</td><td>${r.g}</td></tr>`).join('')}</tbody>
+                    </table>
+                    <div class="summary-box">
+                        <span>AVG: ${s.avg}%</span>
+                        <span>POINTS: ${s.b7}</span>
+                        <span>DIVISION: ${div}</span>
+                    </div>
+                    <div style="margin-top:20px; border:1px solid #000; padding:10px">
+                        <b>CLASS TEACHER:</b> ${s.avg >= 50 ? 'Good work! Keep up the effort.' : 'You need to focus more on your studies.'}<br><br>
+                        <b>HEAD OF SCHOOL:</b> ${s.b7 <= 21 ? 'Excellent results. Maintain this performance.' : 'Seek academic advice from your subject teachers.'}
+                    </div>
+                </div>`;
+        });
+        window.print();
+    }
+
+    // Pakia data mara ya kwanza
+    loadClassData();
+</script>
+</body>
+</html>
