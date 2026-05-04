@@ -3,180 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngunichile Secondary School | Ultimate Smart Portal</title>
+    <title>Ngunichile Secondary | Master School System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p: #002366; --s: #ffcc00; --bg: #f4f7f6; --card: #ffffff; --txt: #1a1a1a; }
-        .dark-mode { --bg: #0f172a; --card: #1e293b; --txt: #f8fafc; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--txt); transition: 0.4s; }
-        header { background: var(--p); color: white; position: sticky; top:0; z-index:1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .top-bar { background: #001a4d; padding: 8px 5%; display: flex; justify-content: space-between; font-size: 13px; }
+        :root { --p: #002366; --s: #ffcc00; --bg: #f0f4f8; --card: #ffffff; --txt: #1c1e21; --accent: #22c55e; }
+        .dark-mode { --bg: #0f172a; --card: #1e293b; --txt: #f8fafc; --p: #1e40af; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--txt); line-height: 1.6; }
+        
+        /* Layout */
+        header { background: var(--p); color: white; position: sticky; top:0; z-index:1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .top-nav { background: rgba(0,0,0,0.2); padding: 5px 5%; display: flex; justify-content: space-between; font-size: 12px; }
         nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { color: var(--s); font-size: 24px; font-weight: 800; }
-        .nav-btns button, .nav-btns a { background: var(--s); color: var(--p); border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; margin-left: 10px; font-size: 13px; }
-        .hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
-        .content { max-width: 1200px; margin: -60px auto 40px; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        .section-card { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .section-card h3 { color: var(--p); margin-bottom: 20px; display: flex; align-items: center; font-size: 1.3rem; border-bottom: 3px solid var(--s); width: fit-content; padding-bottom: 5px; }
-        .camera-box { text-align: center; margin-bottom: 20px; background: #000; border-radius: 15px; overflow: hidden; }
-        #video { width: 100%; display: none; transform: none; } /* Ondoa mirror effect */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
-        .gallery-item { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; border: 2px solid #ddd; }
-        #adminPanel { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; overflow-y:auto; padding:20px; }
-        .admin-box { background:white; max-width:900px; margin:0 auto; padding:30px; border-radius:20px; color:#333; display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+        .logo h1 { color: var(--s); font-size: 24px; font-weight: 900; }
+
+        /* Buttons */
+        .btn { background: var(--s); color: var(--p); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,204,0,0.4); }
+
+        /* Hero */
+        .hero { height: 60vh; background: linear-gradient(rgba(0,35,102,0.7), rgba(0,35,102,0.7)), url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=1000'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; border-bottom: 8px solid var(--s); }
+        .hero h2 { font-size: clamp(1.8rem, 5vw, 3.5rem); margin-bottom: 15px; }
+
+        /* Grid System */
+        .container { max-width: 1300px; margin: -50px auto 50px; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        .card { background: var(--card); padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 25px; border-top: 4px solid var(--p); }
+        .card h3 { color: var(--p); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .card h3 i { color: var(--s); }
+
+        /* Camera & Gallery */
+        #video { width: 100%; border-radius: 10px; display: none; background: #000; margin-bottom: 10px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 15px; }
+        .gallery-item { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; border: 2px solid #ddd; }
+
+        /* Admin Full Modal */
+        #adminPanel { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; overflow-y:auto; padding:20px; }
+        .admin-content { background:white; max-width:1100px; margin:0 auto; padding:30px; border-radius:20px; color:#333; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; }
         .full { grid-column: 1 / -1; }
-        input, textarea { width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; }
-        .save-btn { background:#22c55e; color:white; border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer; grid-column:1 / -1; }
-        @media (max-width: 850px) { .content { grid-template-columns: 1fr; } .admin-box { grid-template-columns: 1fr; } }
+        .admin-header { border-bottom: 3px solid var(--s); margin-bottom: 20px; }
+        input, textarea { width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; font-size: 14px; }
+        label { font-weight:bold; font-size:12px; color:var(--p); display:block; margin-top:10px; }
+        .save-btn { background: var(--accent); color: white; border: none; padding: 20px; border-radius: 10px; font-weight: bold; cursor: pointer; grid-column: 1 / -1; font-size: 18px; }
+
+        @media (max-width: 900px) { .container, .admin-content { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="top-bar">
-        <div><i class="fas fa-phone-alt"></i> <span id="dPhone">...</span> | <i class="fas fa-envelope"></i> <span id="dEmail">...</span></div>
-        <div><button onclick="toggleDark()" style="background:none; color:white; border:none; cursor:pointer;"><i class="fas fa-moon"></i></button></div>
+    <div class="top-nav">
+        <div><i class="fas fa-map-marker-alt"></i> <span id="dLoc">Tanzania</span> | <i class="fas fa-phone"></i> <span id="dPh">07...</span></div>
+        <div>
+            <button onclick="toggleDark()" class="btn" style="padding:4px 8px; font-size:10px;"><i class="fas fa-moon"></i> MODE</button>
+        </div>
     </div>
     <nav>
-        <div class="logo"><h1 id="dName">NGUNICHILE</h1></div>
-        <div class="nav-btns">
-            <button onclick="openAdmin()"><i class="fas fa-user-shield"></i> ADMIN</button>
+        <div class="logo"><h1 id="dName">NGUNICHILE SEC</h1></div>
+        <div style="display:flex; gap:10px;">
+            <a href="Ngunichile_Final_System.html" class="btn" style="background:#fff;"><i class="fas fa-chart-line"></i> PORTAL</a>
+            <button class="btn" onclick="openAdmin()"><i class="fas fa-lock"></i> ADMIN</button>
         </div>
     </nav>
 </header>
 
 <div class="hero" id="dHero">
-    <h2 id="dWelcome">Ngunichile Secondary</h2>
+    <h2 id="dWelcome">Karibu Ngunichile Secondary</h2>
     <p id="dSlogan">Elimu ni Mwanga wa Maisha</p>
+    <div style="margin-top:25px; display:flex; gap:15px;">
+        <a href="#admission" class="btn" style="padding:15px 30px;">APPLY NOW</a>
+        <a href="#portal" class="btn" style="background:white; color:var(--p); padding:15px 30px;">LOGIN PORTAL</a>
+    </div>
 </div>
 
-<div class="content">
+<div class="container">
     <main>
-        <section class="section-card">
-            <h3><i class="fas fa-university"></i> Kuhusu Shule</h3>
-            <p id="dHistory">Historia...</p>
-            <p><strong>Vision:</strong> <span id="dVision">...</span></p>
-            <p><strong>Mission:</strong> <span id="dMission">...</span></p>
-        </section>
+        <div class="card">
+            <h3><i class="fas fa-university"></i> Kuhusu Shule & Historia</h3>
+            <p id="dHistory">...</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px;">
+                <div style="background:#f9f9f9; padding:15px; border-radius:10px; border-left:4px solid var(--s);">
+                    <strong>Dira (Vision):</strong><br><span id="dVision">...</span>
+                </div>
+                <div style="background:#f9f9f9; padding:15px; border-radius:10px; border-left:4px solid var(--p);">
+                    <strong>Dhima (Mission):</strong><br><span id="dMission">...</span>
+                </div>
+            </div>
+        </div>
 
-        <section class="section-card">
-            <h3><i class="fas fa-camera"></i> Camera ya Shule (Mazingira)</h3>
-            <div class="camera-box">
-                <video id="video" autoplay playsinline></video>
-                <canvas id="canvas" style="display:none;"></canvas>
+        <div class="card">
+            <h3><i class="fas fa-camera"></i> Live School Gallery (Picha za Nyuma)</h3>
+            <div style="text-align:center; margin-bottom:15px;">
+                <button class="btn" onclick="startCamera()"><i class="fas fa-video"></i> Washa Camera ya Nyuma</button>
+                <button id="snapBtn" class="btn" style="background:#ef4444; color:white; display:none;" onclick="takePhoto()"><i class="fas fa-circle"></i> Piga Picha</button>
             </div>
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="nav-btns" onclick="startCamera()"><i class="fas fa-video"></i> Washa Camera ya Nyuma</button>
-                <button id="snapBtn" class="nav-btns" style="background:#ef4444; color:white; display:none;" onclick="takePhoto()"><i class="fas fa-circle"></i> Piga Picha</button>
-            </div>
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display:none;"></canvas>
             <div id="dGallery" class="gallery-grid"></div>
-        </section>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-book-open"></i> Elimu & Ratiba</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div>
+                    <strong>Masomo:</strong><br><p id="dSubs">...</p>
+                    <br><strong>Mafanikio:</strong><br><p id="dAchieve">...</p>
+                </div>
+                <div>
+                    <strong>Ratiba:</strong><br><p id="dTime">...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-users-cog"></i> Uongozi & Walimu</h3>
+            <p id="dStaff">...</p>
+        </div>
     </main>
 
     <aside>
-        <section class="section-card">
-            <h3><i class="fas fa-bullhorn"></i> Habari</h3>
-            <div id="dNews"></div>
-        </section>
-        <section class="section-card">
-            <h3><i class="fas fa-id-card"></i> Ada & Usajili</h3>
-            <p id="dFees">...</p>
-        </section>
+        <div class="card" style="border-top-color: var(--accent);">
+            <h3><i class="fas fa-bullhorn"></i> Habari & Matukio</h3>
+            <div id="dNews" style="white-space: pre-wrap;"></div>
+        </div>
+
+        <div class="card" id="admission">
+            <h3><i class="fas fa-file-signature"></i> Usajili & Ada</h3>
+            <p><strong>Masharti:</strong> <span id="dReg">...</span></p>
+            <p><strong>Maelezo ya Ada:</strong> <span id="dFees">...</span></p>
+            <p><strong>Bank/Namba:</strong> <span id="dBank">...</span></p>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-user-clock"></i> Walimu wa Zamu</h3>
+            <p id="dDuty" style="font-weight:bold;"></p>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-address-book"></i> Mawasiliano</h3>
+            <p><i class="fab fa-whatsapp"></i> <span id="dWa">...</span></p>
+            <p><i class="fas fa-envelope"></i> <span id="dEm">...</span></p>
+            <p><i class="fab fa-facebook"></i> <span id="dFb">...</span></p>
+        </div>
     </aside>
 </div>
 
 <div id="adminPanel">
-    <div class="admin-box">
-        <h2 class="full">Admin Panel</h2>
+    <div class="admin-content">
+        <h2 class="full admin-header">Admin Control Center V10 (30+ Features)</h2>
+        
         <div class="f-group"><label>Jina la Shule:</label><input id="iName"></div>
+        <div class="f-group"><label>Kauli Mbiu:</label><input id="iSlogan"></div>
+        <div class="f-group"><label>Email:</label><input id="iEmail"></div>
         <div class="f-group"><label>Phone:</label><input id="iPhone"></div>
-        <div class="f-group full"><label>Historia:</label><textarea id="iHistory"></textarea></div>
-        <div class="f-group full"><label>Habari:</label><textarea id="iNews"></textarea></div>
-        <div class="f-group full"><label>Gallery (Links):</label><textarea id="iGallery"></textarea></div>
-        <button class="save-btn" onclick="saveMaster()">HIFADHI</button>
-        <button class="full" onclick="closeAdmin()">Funga</button>
+        <div class="f-group"><label>WhatsApp:</label><input id="iWa"></div>
+        <div class="f-group"><label>Facebook Link:</label><input id="iFb"></div>
+        <div class="f-group"><label>Location:</label><input id="iLoc"></div>
+        <div class="f-group full"><label>Background Image URL:</label><input id="iHero"></div>
+
+        <div class="f-group full"><label>Historia ya Shule:</label><textarea id="iHistory" rows="3"></textarea></div>
+        <div class="f-group"><label>Dira (Vision):</label><textarea id="iVision"></textarea></div>
+        <div class="f-group"><label>Dhima (Mission):</label><textarea id="iMission"></textarea></div>
+        <div class="f-group"><label>Masomo:</label><textarea id="iSubs"></textarea></div>
+        <div class="f-group"><label>Ratiba:</label><textarea id="iTime"></textarea></div>
+        <div class="f-group full"><label>Mafanikio ya Shule:</label><textarea id="iAchieve"></textarea></div>
+        <div class="f-group full"><label>Uongozi & Walimu:</label><textarea id="iStaff"></textarea></div>
+
+        <div class="f-group full"><label>Habari & Matukio:</label><textarea id="iNews" rows="3"></textarea></div>
+        <div class="f-group"><label>Masharti ya Usajili:</label><textarea id="iReg"></textarea></div>
+        <div class="f-group"><label>Ada Details:</label><textarea id="iFees"></textarea></div>
+        <div class="f-group"><label>Namba za Bank:</label><input id="iBank"></div>
+        <div class="f-group"><label>Mwalimu wa Zamu:</label><input id="iDuty"></div>
+        <div class="f-group full"><label>Gallery (Links nyingi, tenganisha kwa koma , ):</label><textarea id="iGallery"></textarea></div>
+
+        <button class="save-btn" onclick="saveMaster()">HIFADHI MABADILIKO YOTE</button>
+        <button class="full" onclick="closeAdmin()" style="background:none; border:none; color:red; cursor:pointer;">Funga Bila Kuhifadhi</button>
     </div>
 </div>
 
 <script>
     function toggleDark() { document.body.classList.toggle('dark-mode'); }
-    function openAdmin() { if(prompt("Pass:") === "1234") { document.getElementById('adminPanel').style.display='block'; loadInputs(); } }
+    function openAdmin() { if(prompt("Pass:") === "1234") { document.getElementById('adminPanel').style.display='block'; loadData(); } }
     function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
 
+    const DB_KEY = 'ngunichile_master_v10';
+
     function saveMaster() {
-        const d = {
-            name: document.getElementById('iName').value,
-            phone: document.getElementById('iPhone').value,
-            history: document.getElementById('iHistory').value,
-            news: document.getElementById('iNews').value,
+        const data = {
+            name: document.getElementById('iName').value, slogan: document.getElementById('iSlogan').value,
+            email: document.getElementById('iEmail').value, phone: document.getElementById('iPhone').value,
+            wa: document.getElementById('iWa').value, fb: document.getElementById('iFb').value,
+            loc: document.getElementById('iLoc').value, hero: document.getElementById('iHero').value,
+            history: document.getElementById('iHistory').value, vision: document.getElementById('iVision').value,
+            mission: document.getElementById('iMission').value, subs: document.getElementById('iSubs').value,
+            time: document.getElementById('iTime').value, achieve: document.getElementById('iAchieve').value,
+            staff: document.getElementById('iStaff').value, news: document.getElementById('iNews').value,
+            reg: document.getElementById('iReg').value, fees: document.getElementById('iFees').value,
+            bank: document.getElementById('iBank').value, duty: document.getElementById('iDuty').value,
             gallery: document.getElementById('iGallery').value
         };
-        localStorage.setItem('ngunichile_v9', JSON.stringify(d));
-        applyData(d);
+        localStorage.setItem(DB_KEY, JSON.stringify(data));
+        render(data);
         closeAdmin();
     }
 
-    function loadInputs() {
-        const d = JSON.parse(localStorage.getItem('ngunichile_v9')) || {};
-        document.getElementById('iName').value = d.name || "";
-        document.getElementById('iPhone').value = d.phone || "";
-        document.getElementById('iHistory').value = d.history || "";
-        document.getElementById('iNews').value = d.news || "";
+    function loadData() {
+        const d = JSON.parse(localStorage.getItem(DB_KEY)) || {};
+        document.getElementById('iName').value = d.name || ""; document.getElementById('iSlogan').value = d.slogan || "";
+        document.getElementById('iEmail').value = d.email || ""; document.getElementById('iPhone').value = d.phone || "";
+        document.getElementById('iWa').value = d.wa || ""; document.getElementById('iFb').value = d.fb || "";
+        document.getElementById('iLoc').value = d.loc || ""; document.getElementById('iHero').value = d.hero || "";
+        document.getElementById('iHistory').value = d.history || ""; document.getElementById('iVision').value = d.vision || "";
+        document.getElementById('iMission').value = d.mission || ""; document.getElementById('iSubs').value = d.subs || "";
+        document.getElementById('iTime').value = d.time || ""; document.getElementById('iAchieve').value = d.achieve || "";
+        document.getElementById('iStaff').value = d.staff || ""; document.getElementById('iNews').value = d.news || "";
+        document.getElementById('iReg').value = d.reg || ""; document.getElementById('iFees').value = d.fees || "";
+        document.getElementById('iBank').value = d.bank || ""; document.getElementById('iDuty').value = d.duty || "";
         document.getElementById('iGallery').value = d.gallery || "";
     }
 
-    function applyData(d) {
+    function render(d) {
         if(!d) return;
-        document.getElementById('dName').innerText = d.name;
-        document.getElementById('dHistory').innerText = d.history;
-        document.getElementById('dNews').innerText = d.news;
-        const gal = document.getElementById('dGallery');
-        gal.innerHTML = "";
+        document.getElementById('dName').innerText = d.name; document.getElementById('dSlogan').innerText = d.slogan;
+        document.getElementById('dPh').innerText = d.phone; document.getElementById('dLoc').innerText = d.loc;
+        if(d.hero) document.getElementById('dHero').style.backgroundImage = `linear-gradient(rgba(0,35,102,0.7), rgba(0,35,102,0.7)), url('${d.hero}')`;
+        document.getElementById('dHistory').innerText = d.history; document.getElementById('dVision').innerText = d.vision;
+        document.getElementById('dMission').innerText = d.mission; document.getElementById('dSubs').innerText = d.subs;
+        document.getElementById('dTime').innerText = d.time; document.getElementById('dAchieve').innerText = d.achieve;
+        document.getElementById('dStaff').innerText = d.staff; document.getElementById('dNews').innerText = d.news;
+        document.getElementById('dReg').innerText = d.reg; document.getElementById('dFees').innerText = d.fees;
+        document.getElementById('dBank').innerText = d.bank; document.getElementById('dDuty').innerText = d.duty;
+        document.getElementById('dWa').innerText = d.wa; document.getElementById('dEm').innerText = d.email;
+        document.getElementById('dFb').innerText = d.fb;
+
+        const g = document.getElementById('dGallery'); g.innerHTML = "";
         if(d.gallery) {
-            d.gallery.split(',').forEach(link => {
-                const img = document.createElement('img');
-                img.src = link.trim();
-                img.className = 'gallery-item';
-                gal.appendChild(img);
+            d.gallery.split(',').forEach(u => {
+                const img = document.createElement('img'); img.src = u.trim(); img.className = 'gallery-item'; g.appendChild(img);
             });
         }
     }
 
-    // CAMERA LOGIC ILIYOBORESHWA (REAR CAMERA)
     async function startCamera() {
-        try {
-            const constraints = {
-                video: { facingMode: { exact: "environment" } } // Hii inalazimisha Camera ya Nyuma
-            };
-            // Kama "environment" ikigoma (kwenye baadhi ya PC), inafungua camera yoyote iliyopo
-            const stream = await navigator.mediaDevices.getUserMedia(constraints).catch(() => {
-                return navigator.mediaDevices.getUserMedia({ video: true });
-            });
-            
-            const video = document.getElementById('video');
-            video.srcObject = stream;
-            video.style.display = 'block';
-            document.getElementById('snapBtn').style.display = 'inline-block';
-        } catch (e) {
-            alert("Inashindwa kufungua Camera ya Nyuma. Hakikisha umeruhusu Camera.");
-        }
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } }).catch(() => navigator.mediaDevices.getUserMedia({ video: true }));
+        const video = document.getElementById('video');
+        video.srcObject = stream; video.style.display = 'block'; document.getElementById('snapBtn').style.display = 'inline-block';
     }
 
     function takePhoto() {
-        const canvas = document.getElementById('canvas');
-        const video = document.getElementById('video');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        const canvas = document.getElementById('canvas'); const video = document.getElementById('video');
+        canvas.width = video.videoWidth; canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0);
-        const imgUrl = canvas.toDataURL('image/png');
-        const img = document.createElement('img');
-        img.src = imgUrl;
-        img.className = 'gallery-item';
+        const img = document.createElement('img'); img.src = canvas.toDataURL('image/png'); img.className = 'gallery-item';
         document.getElementById('dGallery').prepend(img);
     }
 
-    window.onload = () => applyData(JSON.parse(localStorage.getItem('ngunichile_v9')));
+    window.onload = () => render(JSON.parse(localStorage.getItem(DB_KEY)));
 </script>
 </body>
 </html>
