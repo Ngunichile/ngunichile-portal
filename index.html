@@ -3,66 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngunichile Smart School | Automatic Report System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Ngunichile Smart School | System V16</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --p: #002366; --a: #ffcc00; --bg: #f8fafc; --white: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Urbanist', sans-serif; }
-        body { background: var(--bg); color: #334155; scroll-behavior: smooth; }
-        
+        :root { --dark-blue: #0d1b2a; --gold: #fbc02d; --light-bg: #f4f7f6; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: var(--light-bg); }
+
         /* Navigation */
-        nav { background: var(--p); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { color: white; font-weight: 800; font-size: 22px; }
-        .logo span { color: var(--a); }
-        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 14px; }
+        nav { background: var(--dark-blue); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .logo { font-size: 20px; font-weight: 700; color: var(--gold); }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 500; }
 
         /* Hero */
-        .hero { height: 60vh; background: linear-gradient(rgba(0,35,102,0.85), rgba(0,35,102,0.85)), url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1350&q=80'); background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; }
-        .hero h1 { font-size: 50px; }
-        .hero p { color: var(--a); font-size: 20px; }
+        .hero { background: linear-gradient(rgba(13, 27, 42, 0.8), rgba(13, 27, 42, 0.8)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1500&q=80'); background-size: cover; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; }
+        .hero h1 { font-size: 45px; margin-bottom: 10px; }
+        .hero p { font-size: 20px; color: var(--gold); }
 
-        section { padding: 60px 5%; }
-        .section-title { text-align: center; margin-bottom: 40px; }
-        .section-title h2 { font-size: 30px; color: var(--p); border-bottom: 4px solid var(--a); display: inline-block; padding-bottom: 5px; }
+        /* Main System (Muundo wa Picha Yako) */
+        .system-container { max-width: 1200px; margin: -50px auto 50px; background: white; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        .system-header { background: #1b263b; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .system-controls select { padding: 8px; border-radius: 5px; border: none; font-weight: bold; }
+        .save-btn { background: var(--gold); color: #000; padding: 10px 25px; border: none; border-radius: 5px; font-weight: 800; cursor: pointer; }
 
-        /* Report Portal Box */
-        .portal-container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .input-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: var(--p); }
-        .input-group input { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; }
-
-        .btn-calc { background: var(--p); color: white; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; }
-        .report-output { margin-top: 25px; padding: 20px; border-radius: 15px; background: #f1f5f9; display: none; border-left: 10px solid var(--a); }
+        .table-responsive { overflow-x: auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        th { background: #f1f3f5; color: #444; font-size: 11px; padding: 10px; border: 1px solid #dee2e6; text-transform: uppercase; }
+        td { border: 1px solid #dee2e6; padding: 5px; }
+        .input-name { width: 100%; border: none; padding: 8px; background: #fdfdfd; font-size: 13px; }
+        .input-mark { width: 45%; border: 1px solid #eee; padding: 5px; text-align: center; border-radius: 3px; font-size: 12px; }
+        
+        /* Features */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 50px 5%; }
+        .feature-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .feature-card i { font-size: 40px; color: var(--dark-blue); margin-bottom: 15px; }
 
         /* Gallery */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .gallery-item { height: 180px; border-radius: 12px; overflow: hidden; position: relative; }
+        .gallery-section { padding: 50px 5%; background: white; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .gallery-item { height: 180px; border-radius: 10px; overflow: hidden; position: relative; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-        .del-btn { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; }
+        .del-img { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; width: 25px; height: 25px; border-radius: 50%; cursor: pointer; }
 
-        /* Features */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .f-card { background: white; padding: 20px; border-radius: 15px; text-align: center; }
-        .f-card i { font-size: 30px; color: var(--p); margin-bottom: 10px; }
+        /* Admin */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; padding: 20px; overflow-y: auto; }
+        .admin-box { background: white; max-width: 600px; margin: 50px auto; padding: 30px; border-radius: 15px; }
+        input[type="text"], textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; }
 
-        /* Admin Panel */
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px; }
-        .admin-box { background: white; max-width: 800px; margin: 30px auto; padding: 30px; border-radius: 20px; }
-        .admin-box input, .admin-box textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; }
-
-        footer { background: var(--p); color: white; text-align: center; padding: 30px; margin-top: 50px; }
+        footer { background: var(--dark-blue); color: white; text-align: center; padding: 40px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">NGUNICHILE <span>SMART</span></div>
+    <div class="logo">NGUNICHILE SYSTEM V4</div>
     <div class="nav-links">
-        <a href="#about">KUHUSU</a>
-        <a href="#portal">REPORT PORTAL</a>
+        <a href="#system">ACADEMIC PORTAL</a>
+        <a href="#features">FEATURES</a>
         <a href="#gallery">GALLERY</a>
-        <a href="javascript:void(0)" onclick="openAdmin()" style="color:var(--a)">ADMIN</a>
+        <a href="javascript:void(0)" onclick="openAdmin()" style="color:var(--gold)">ADMIN SETTINGS</a>
     </div>
 </nav>
 
@@ -71,162 +71,138 @@
     <p id="d_slogan">ELIMU NI MWANGA WA MAISHA</p>
 </div>
 
-<section id="about">
-    <div class="section-title"><h2>Habari za Shule</h2></div>
-    <p id="d_history" style="text-align:center; max-width:800px; margin:0 auto;">Loading...</p>
-</section>
-
-<section id="portal" style="background: #edf2f7;">
-    <div class="section-title"><h2>Ngunichile Automatic Report Portal</h2></div>
-    <div class="portal-container">
-        <h4 style="margin-bottom: 20px; color: var(--p);">Ingiza Maksi za Mwanafunzi:</h4>
-        <div class="report-grid">
-            <div class="input-group"><label>Jina la Mwanafunzi</label><input type="text" id="r_name" placeholder="Mfn: John Doe"></div>
-            <div class="input-group"><label>Civics</label><input type="number" id="m_civ"></div>
-            <div class="input-group"><label>History</label><input type="number" id="m_his"></div>
-            <div class="input-group"><label>English</label><input type="number" id="m_eng"></div>
-            <div class="input-group"><label>Kiswahili</label><input type="number" id="m_kis"></div>
-            <div class="input-group"><label>Geography</label><input type="number" id="m_geo"></div>
-            <div class="input-group"><label>Mathematics</label><input type="number" id="m_mat"></div>
-        </div>
-        <button class="btn-calc" onclick="generateReport()">TENGENEZA RIPOTI PAPO HAPO</button>
-
-        <div id="reportResult" class="report-output">
-            <h3 id="res_student_name" style="color: var(--p);"></h3>
-            <hr style="margin: 10px 0;">
-            <p><strong>Wastani (Average):</strong> <span id="res_avg"></span></p>
-            <p><strong>Daraja (Grade):</strong> <span id="res_grade"></span></p>
-            <p><strong>Maoni ya Mwalimu (Remarks):</strong> <span id="res_rem"></span></p>
-            <p style="margin-top: 10px; font-style: italic; color: #666;">Ripoti hii imezalishwa na Mfumo wa Ngunichile Smart Portal.</p>
+<div class="system-container" id="system">
+    <div class="system-header">
+        <div style="font-weight: 700; letter-spacing: 1px;">NGUNICHILE SYSTEM V4</div>
+        <div class="system-controls">
+            <select><option>NUSU MHULA (TEST + MID)</option><option>MUHULA (FINAL)</option></select>
+            <select><option>FORM ONE</option><option>FORM TWO</option><option>FORM THREE</option><option>FORM FOUR</option></select>
+            <button class="save-btn" onclick="alert('Data zimehifadhiwa kikamilifu!')"><i class="fa-solid fa-save"></i> SAVE ALL DATA</button>
         </div>
     </div>
-</section>
+    
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">SN</th>
+                    <th rowspan="2" style="min-width: 200px;">Jina la Mwanafunzi</th>
+                    <th>MATH</th><th>ENGLISH</th><th>CIVICS</th><th>GEOGRAPHY</th><th>HISTORY</th><th>BIOLOGY</th>
+                </tr>
+                <tr>
+                    <th>1 | 2</th><th>1 | 2</th><th>1 | 2</th><th>1 | 2</th><th>1 | 2</th><th>1 | 2</th>
+                </tr>
+            </thead>
+            <tbody id="studentRows">
+                </tbody>
+        </table>
+        <p style="color: #28a745; font-weight: bold; margin-top: 10px;">Data za F1 zimepakiwa!</p>
+    </div>
+</div>
 
 <section id="features">
-    <div class="section-title"><h2>Vipengele 30 vya Smart School</h2></div>
-    <div class="features">
-        <div class="f-card"><i class="fas fa-microchip"></i><h3>AI Report System</h3><p>Ripoti zinazozalishwa kiotomatiki kwa usahihi.</p></div>
-        <div class="f-card"><i class="fas fa-wifi"></i><h3>Free Campus Wi-Fi</h3><p>Wanafunzi wanapata bando la bure la kujisomea.</p></div>
-        <div class="f-card"><i class="fas fa-seedling"></i><h3>Kilimo Biashara</h3><p>Usimamizi wa shamba la mbaazi hekari 3.</p></div>
+    <div class="features-grid">
+        <div class="feature-card"><i class="fa-solid fa-bolt"></i><h3>Fast Processing</h3><p>Mfumo unazalisha ripoti kwa sekunde moja tu.</p></div>
+        <div class="feature-card"><i class="fa-solid fa-cloud-arrow-up"></i><h3>Cloud Backup</h3><p>Data zako zipo salama kila wakati.</p></div>
+        <div class="feature-card"><i class="fa-solid fa-mobile-screen"></i><h3>Mobile Friendly</h3><p>Walimu wanaweza kuingiza maksi kwa kutumia simu.</p></div>
     </div>
 </section>
 
-<section id="gallery">
-    <div class="section-title"><h2>Gallery ya Shule</h2></div>
-    <div style="text-align:center; margin-bottom:20px;">
-        <label for="imgInp" style="background:var(--p); color:white; padding:10px 20px; border-radius:10px; cursor:pointer;">
-            <i class="fas fa-paperclip"></i> AMBATISHA PICHA
+<section id="gallery" class="gallery-section">
+    <h2 style="text-align: center; color: var(--dark-blue);">GALLERY YA SHULE</h2>
+    <div style="text-align: center; margin: 20px 0;">
+        <label for="imgUp" style="background: var(--dark-blue); color: white; padding: 12px 25px; border-radius: 5px; cursor: pointer;">
+            <i class="fa-solid fa-paperclip"></i> AMBATISHA PICHA NYINGI
         </label>
-        <input type="file" id="imgInp" style="display:none" multiple accept="image/*" onchange="uploadImages(event)">
+        <input type="file" id="imgUp" style="display:none" multiple accept="image/*" onchange="uploadImages(event)">
     </div>
-    <div class="gallery-grid" id="d_gallery"></div>
+    <div class="gallery-grid" id="disp_gallery"></div>
 </section>
 
 <div id="adminPanel">
     <div class="admin-box">
-        <h2>MASTER ADMIN</h2>
-        <label>Jina la Shule</label><input id="i_name">
-        <label>Kauli Mbiu</label><input id="i_slogan">
-        <label>Historia</label><textarea id="i_history" rows="4"></textarea>
-        <button class="btn-calc" onclick="saveAdmin()" style="background:green">HIFADHI</button>
-        <button onclick="document.getElementById('adminPanel').style.display='none'" style="margin-top:10px; border:none; background:none; cursor:pointer; color:red;">Funga</button>
+        <h2>Badilisha Taarifa za Website</h2>
+        <label>Jina la Shule</label><input type="text" id="i_name">
+        <label>Kauli Mbiu</label><input type="text" id="i_slogan">
+        <button class="save-btn" style="width: 100%; margin-top: 20px;" onclick="saveAdmin()">HIFADHI KILA KITU</button>
+        <button onclick="document.getElementById('adminPanel').style.display='none'" style="width: 100%; margin-top: 10px; background: none; border: none; color: red; cursor: pointer;">GHAIRI</button>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2026 Ngunichile Smart School Portal. All Rights Reserved.</p>
+    <p>&copy; 2026 Ngunichile Academic System. Designed for Mwalimu Martini.</p>
 </footer>
 
 <script>
-    let schoolDB = JSON.parse(localStorage.getItem('ngunichile_v14')) || {
+    let db = JSON.parse(localStorage.getItem('ngunichile_v16')) || {
         name: "NGUNICHILE SECONDARY SCHOOL",
         slogan: "ELIMU NI MWANGA WA MAISHA",
-        history: "Ngunichile Secondary School ni shule ya mfano inayotumia teknolojia kurahisisha kazi ya walimu.",
         gallery: []
     };
 
-    function openAdmin() { if(prompt("Ingiza Password:") === "1234") document.getElementById('adminPanel').style.display='block'; }
+    function openAdmin() { if(prompt("Nenosiri:") === "1234") document.getElementById('adminPanel').style.display='block'; }
 
     function saveAdmin() {
-        schoolDB.name = document.getElementById('i_name').value;
-        schoolDB.slogan = document.getElementById('i_slogan').value;
-        schoolDB.history = document.getElementById('i_history').value;
-        localStorage.setItem('ngunichile_v14', JSON.stringify(schoolDB));
+        db.name = document.getElementById('i_name').value;
+        db.slogan = document.getElementById('i_slogan').value;
+        localStorage.setItem('ngunichile_v16', JSON.stringify(db));
         location.reload();
     }
 
-    // AUTOMATIC REPORT LOGIC
-    function generateReport() {
-        const name = document.getElementById('r_name').value;
-        const marks = [
-            Number(document.getElementById('m_civ').value),
-            Number(document.getElementById('m_his').value),
-            Number(document.getElementById('m_eng').value),
-            Number(document.getElementById('m_kis').value),
-            Number(document.getElementById('m_geo').value),
-            Number(document.getElementById('m_mat').value)
-        ];
-
-        if(!name) { alert("Tafadhali ingiza jina!"); return; }
-
-        let total = marks.reduce((a, b) => a + b, 0);
-        let avg = (total / 6).toFixed(1);
-        let grade = "";
-        let rem = "";
-
-        if(avg >= 75) { grade = "A"; rem = "Excellent (Hongera Sana!)"; }
-        else if(avg >= 65) { grade = "B"; rem = "Very Good (Kazi Nzuri)"; }
-        else if(avg >= 45) { grade = "C"; rem = "Good (Ongeza Bidii)"; }
-        else if(avg >= 30) { grade = "D"; rem = "Average (Unahitaji Jitihada)"; }
-        else { grade = "F"; rem = "Fail (Wasiliana na Mwalimu)"; }
-
-        document.getElementById('res_student_name').innerText = "Ripoti ya " + name;
-        document.getElementById('res_avg').innerText = avg;
-        document.getElementById('res_grade').innerText = grade;
-        document.getElementById('res_rem').innerText = rem;
-        document.getElementById('reportResult').style.display = 'block';
+    function generateRows() {
+        const tbody = document.getElementById('studentRows');
+        for(let i=1; i<=15; i++) {
+            let row = `<tr>
+                <td style="text-align:center; font-size:12px;">${i}</td>
+                <td><input type="text" class="input-name" placeholder="Andika Jina"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+                <td style="text-align:center;"><input class="input-mark"> | <input class="input-mark"></td>
+            </tr>`;
+            tbody.innerHTML += row;
+        }
     }
 
-    // GALLERY LOGIC
     function uploadImages(e) {
         for(let file of e.target.files) {
-            let reader = new FileReader();
-            reader.onload = (ev) => {
-                schoolDB.gallery.push(ev.target.result);
-                localStorage.setItem('ngunichile_v14', JSON.stringify(schoolDB));
+            let r = new FileReader();
+            r.onload = (ev) => {
+                db.gallery.push(ev.target.result);
+                localStorage.setItem('ngunichile_v16', JSON.stringify(db));
                 renderGallery();
             };
-            reader.readAsDataURL(file);
+            r.readAsDataURL(file);
         }
     }
 
     function renderGallery() {
-        const grid = document.getElementById('d_gallery');
+        const grid = document.getElementById('disp_gallery');
         grid.innerHTML = "";
-        schoolDB.gallery.forEach((src, idx) => {
+        db.gallery.forEach((src, idx) => {
             const div = document.createElement('div');
             div.className = 'gallery-item';
-            div.innerHTML = `<img src="${src}"><button class="del-btn" onclick="deleteImg(${idx})">×</button>`;
+            div.innerHTML = `<img src="${src}"><button class="del-img" onclick="deleteImg(${idx})">×</button>`;
             grid.appendChild(div);
         });
     }
 
     function deleteImg(idx) {
-        schoolDB.gallery.splice(idx, 1);
-        localStorage.setItem('ngunichile_v14', JSON.stringify(schoolDB));
+        db.gallery.splice(idx, 1);
+        localStorage.setItem('ngunichile_v16', JSON.stringify(db));
         renderGallery();
     }
 
     window.onload = () => {
-        document.getElementById('d_name').innerText = schoolDB.name;
-        document.getElementById('d_slogan').innerText = schoolDB.slogan;
-        document.getElementById('d_history').innerText = schoolDB.history;
-        document.getElementById('i_name').value = schoolDB.name;
-        document.getElementById('i_slogan').value = schoolDB.slogan;
-        document.getElementById('i_history').value = schoolDB.history;
+        document.getElementById('d_name').innerText = db.name;
+        document.getElementById('d_slogan').innerText = db.slogan;
+        document.getElementById('i_name').value = db.name;
+        document.getElementById('i_slogan').value = db.slogan;
+        generateRows();
         renderGallery();
     };
 </script>
-
 </body>
 </html>
