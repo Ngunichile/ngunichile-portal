@@ -3,226 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngunichile Smart School System V11</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Ngunichile Smart Portal V12 | Ultimate System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --p: #002366; --s: #ffcc00; --bg: #f4f7f9; --card: #ffffff; --txt: #1a1a1a; }
-        .dark-mode { --bg: #0f172a; --card: #1e293b; --txt: #f8fafc; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: var(--txt); }
-        
-        header { background: var(--p); color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { color: var(--s); font-size: 22px; font-weight: 800; }
-        .btn { background: var(--s); color: var(--p); border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 13px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #0f172a; font-family: 'Urbanist', sans-serif; overflow-x: hidden; color: #f8fafc; }
 
-        .hero { height: 60vh; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; border-bottom: 5px solid var(--s); transition: background 1s ease-in-out; }
-        .hero h2 { font-size: 2.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .slide-container {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 5%;
+        }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        .card { background: var(--card); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .card h3 { color: var(--p); border-bottom: 2px solid var(--s); padding-bottom: 8px; margin-bottom: 15px; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff; }
+        .slide-title { font-size: clamp(30px, 5vw, 50px); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .slide-title span { color: #ffcc00; }
+        p, li { font-size: 18px; line-height: 1.6; color: #cbd5e1; }
 
-        .gallery-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-        .gallery-item { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        .bg-blob { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; opacity: 0.15; }
+        .blob-1 { width: 400px; height: 400px; background: #ffcc00; top: -100px; right: -100px; }
+        .blob-2 { width: 300px; height: 300px; background: #1e40af; bottom: -50px; left: -50px; }
 
-        /* Admin Styles */
-        #adminPanel { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; overflow-y:auto; padding:20px; }
-        .admin-box { background:white; max-width:1000px; margin:0 auto; padding:30px; border-radius:15px; color:#333; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; }
-        .full { grid-column: 1 / -1; }
-        input, textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; }
-        label { font-size: 11px; font-weight: bold; color: var(--p); }
-        .save-btn { background: #22c55e; color: white; padding: 15px; border-radius: 10px; border: none; cursor: pointer; font-size: 16px; font-weight: bold; grid-column: 1 / -1; }
+        .content-area { position: relative; z-index: 2; flex-grow: 1; display: flex; flex-direction: column; }
+        .two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .tiled-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .tile { background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .tile i { color: #ffcc00; font-size: 32px; margin-bottom: 15px; }
 
-        @media (max-width: 850px) { .container, .admin-box { grid-template-columns: 1fr; } }
+        .table-container { width: 100%; border-radius: 15px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); }
+        table { width: 100%; border-collapse: collapse; background: rgba(15, 23, 42, 0.8); min-width: 800px; }
+        th { background: #1e293b; padding: 15px; text-align: left; color: #ffcc00; font-size: 14px; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 16px; }
+
+        .admin-btn { position: fixed; bottom: 20px; right: 20px; background: #ffcc00; color: #000; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1000; border: none; }
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px; }
+        .admin-content { background: #fff; color: #334155; max-width: 1000px; margin: 0 auto; padding: 30px; border-radius: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .admin-content h2 { grid-column: 1 / -1; color: #1e293b; border-bottom: 2px solid #ffcc00; }
+        .full-width { grid-column: 1 / -1; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; }
+
+        .search-bar { background: rgba(255,255,255,0.1); padding: 15px 25px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.2); width: 100%; margin-bottom: 20px; color: #fff; font-size: 18px; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; width: 100%; margin-top: 20px; }
+        .gallery-img-card { width: 100%; height: 180px; border-radius: 10px; overflow: hidden; background: #1e293b; }
+        .gallery-img-card img { width: 100%; height: 100%; object-fit: cover; }
+        .upload-label { background: #1e40af; color: white; padding: 15px 30px; border-radius: 10px; cursor: pointer; display: inline-block; }
+
+        .slide-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 30px; }
+        .nav-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; }
+        .nav-dot.active { background: #ffcc00; transform: scale(1.3); }
+
+        .section-slide { display: none; }
+        .section-slide.active { display: flex; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<header>
-    <nav>
-        <div class="logo"><h1 id="dName">NGUNICHILE SEC</h1></div>
-        <div style="display:flex; gap:10px;">
-            <button class="btn" onclick="toggleDark()"><i class="fas fa-moon"></i></button>
-            <button class="btn" onclick="openAdmin()"><i class="fas fa-tools"></i> ADMIN</button>
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+
+<div class="slide-container section-slide active" id="slide1">
+    <div class="content-area" style="justify-content: center; align-items: center; text-align: center;">
+        <h1 style="font-size: clamp(40px, 10vw, 80px); line-height: 1;" id="disp_name">NGUNICHILE <span style="color: #ffcc00;">SMART SCHOOL</span></h1>
+        <p style="font-size: clamp(18px, 3vw, 28px); letter-spacing: 5px; opacity: 0.8;" id="disp_slogan">ELIMU NI MWANGA WA MAISHA</p>
+        <div style="margin-top: 50px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div style="background: #ffcc00; color: #000; padding: 15px 40px; border-radius: 10px; font-weight: 700; cursor: pointer;">JIUNGE NASI</div>
+            <div style="border: 2px solid #fff; color: #fff; padding: 15px 40px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="goToSlide(4)">ANGALIA MATOKEO</div>
         </div>
-    </nav>
-</header>
-
-<div class="hero" id="dHero">
-    <h2 id="dWelcome">Karibu Ngunichile Secondary</h2>
-    <p id="dSlogan">Elimu ni Mwanga wa Maisha</p>
-</div>
-
-<div class="container">
-    <main>
-        <div class="card">
-            <h3><i class="fas fa-info-circle"></i> Kuhusu Sisi & Historia</h3>
-            <p id="dHistory">Historia itatokea hapa...</p>
-            <div style="margin-top:15px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <div style="background:#f0f4f8; padding:10px; border-radius:5px;"><strong>Dira:</strong> <span id="dVision">...</span></div>
-                <div style="background:#f0f4f8; padding:10px; border-radius:5px;"><strong>Dhima:</strong> <span id="dMission">...</span></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3><i class="fas fa-images"></i> Gallery ya Shule</h3>
-            <div id="dGallery" class="gallery-container"></div>
-        </div>
-
-        <div class="card">
-            <h3><i class="fas fa-graduation-cap"></i> Taaluma & Mafanikio</h3>
-            <p><strong>Masomo:</strong> <span id="dSubs">...</span></p>
-            <p><strong>Mafanikio:</strong> <span id="dAchieve">...</span></p>
-        </div>
-    </main>
-
-    <aside>
-        <div class="card">
-            <h3><i class="fas fa-bullhorn"></i> Habari & Matangazo</h3>
-            <div id="dNews" style="white-space: pre-wrap;"></div>
-        </div>
-        <div class="card">
-            <h3><i class="fas fa-money-check-alt"></i> Ada & Usajili</h3>
-            <p><strong>Ada:</strong> <span id="dFees">...</span></p>
-            <p><strong>Usajili:</strong> <span id="dReg">...</span></p>
-        </div>
-        <div class="card">
-            <h3><i class="fas fa-phone"></i> Mawasiliano</h3>
-            <p>Simu: <span id="dPh">...</span></p>
-            <p>Email: <span id="dEm">...</span></p>
-        </div>
-    </aside>
-</div>
-
-<div id="adminPanel">
-    <div class="admin-box">
-        <h2 class="full" style="border-bottom:3px solid var(--s)">Admin Master Control (V11)</h2>
-        
-        <div class="f-group"><label>Jina la Shule</label><input id="iName"></div>
-        <div class="f-group"><label>Kauli Mbiu</label><input id="iSlogan"></div>
-        <div class="f-group"><label>Simu</label><input id="iPhone"></div>
-        <div class="f-group"><label>Email</label><input id="iEmail"></div>
-        <div class="f-group"><label>Ada Details</label><input id="iFees"></div>
-        <div class="f-group"><label>Vigezo vya Usajili</label><input id="iReg"></div>
-
-        <div class="f-group full">
-            <label style="color:red;">1. PAKIA PICHA ZA BACKGROUND (Zitaonekana juu)</label>
-            <input type="file" id="iHeroFiles" multiple accept="image/*" onchange="processImages('hero')">
-        </div>
-
-        <div class="f-group full">
-            <label style="color:green;">2. PAKIA PICHA ZA GALLERY (Zionekane ukurasa wa picha)</label>
-            <input type="file" id="iGalleryFiles" multiple accept="image/*" onchange="processImages('gallery')">
-        </div>
-
-        <div class="f-group full"><label>Historia ya Shule</label><textarea id="iHistory" rows="3"></textarea></div>
-        <div class="f-group"><label>Vision</label><textarea id="iVision"></textarea></div>
-        <div class="f-group"><label>Mission</label><textarea id="iMission"></textarea></div>
-        <div class="f-group"><label>Orodha ya Masomo</label><textarea id="iSubs"></textarea></div>
-        <div class="f-group"><label>Mafanikio</label><textarea id="iAchieve"></textarea></div>
-        <div class="f-group full"><label>Habari Mpya & Matukio</label><textarea id="iNews" rows="3"></textarea></div>
-
-        <button class="save-btn" onclick="saveData()">HIFADHI MABADILIKO YOTE</button>
-        <button class="full" onclick="closeAdmin()" style="color:red; background:none; border:none; cursor:pointer;">Funga</button>
     </div>
 </div>
 
+<div class="slide-container section-slide" id="slide2">
+    <h2 class="slide-title">KUHUSU <span>SHULE YETU</span></h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>HISTORIA YETU</h3>
+                <p id="disp_history">Historia ya shule itatokea hapa...</p>
+                <div style="margin-top: 30px; display: grid; gap: 20px;">
+                    <div class="tile"><h3>DIRA (VISION)</h3><p id="disp_vision">...</p></div>
+                    <div class="tile"><h3>DHIMA (MISSION)</h3><p id="disp_mission">...</p></div>
+                </div>
+            </div>
+            <div class="tile" style="display:flex; align-items:center; justify-content:center; background:#1e293b;">
+                <h2 style="color:rgba(255,255,255,0.1); font-size:100px;">NSS</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container section-slide" id="slide3">
+    <h2 class="slide-title">MFUMO WA <span>KIDIJITALI</span></h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile"><i class="fa-solid fa-user-check"></i><h3>Admissions</h3><p>Usajili wa wanafunzi kidijitali.</p></div>
+            <div class="tile"><i class="fa-solid fa-money-bill-wave"></i><h3>Fees Management</h3><p>Ufuatiliaji wa ada na risiti.</p></div>
+            <div class="tile"><i class="fa-solid fa-chart-line"></i><h3>Results Portal</h3><p>Matokeo ya haraka kwenye simu.</p></div>
+            <div class="tile"><i class="fa-solid fa-message"></i><h3>SMS Alerts</h3><p>Taarifa kwa wazazi papo hapo.</p></div>
+            <div class="tile"><i class="fa-solid fa-book"></i><h3>E-Library</h3><p>Vitabu na past papers mtandaoni.</p></div>
+            <div class="tile"><i class="fa-solid fa-shield-heart"></i><h3>Student Health</h3><p>Kumbukumbu za afya ya wanafunzi.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container section-slide" id="slide4">
+    <h2 class="slide-title">ANGALIA <span>MATOKEO</span></h2>
+    <div class="content-area">
+        <input type="text" class="search-bar" placeholder="Ingiza Index Number (mf. S4321/0001)..." onkeyup="filterResults(this.value)">
+        <div class="table-container">
+            <table id="resultsTable">
+                <thead>
+                    <tr><th>INDEX NO</th><th>JINA</th><th>CIVICS</th><th>HIST</th><th>ENGL</th><th>MATH</th><th>AVG</th><th>REMARK</th></tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container section-slide" id="slide5">
+    <h2 class="slide-title">SHULE KWA <span>PICHA</span></h2>
+    <div class="content-area">
+        <label for="galUp" class="upload-label"><i class="fas fa-camera"></i> AMBATISHA PICHA ZA SHULE</label>
+        <input type="file" id="galUp" style="display:none" multiple accept="image/*" onchange="handleUpload(event)">
+        <div class="gallery-grid" id="disp_gallery"></div>
+    </div>
+</div>
+
+<div class="slide-container section-slide" id="slide6">
+    <h2 class="slide-title">HABARI & <span>MATUKIO</span></h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="tile full-width">
+                <h3>MATANGAZO YA HIVI KARIBUNI</h3>
+                <p id="disp_news" style="white-space: pre-line;">...</p>
+            </div>
+            <div class="tile">
+                <h3>MAWASILIANO</h3>
+                <p>Simu: <span id="disp_phone"></span></p>
+                <p>Email: <span id="disp_email"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="admin-btn" onclick="toggleAdmin()"><i class="fa-solid fa-lock"></i> ADMIN</button>
+
+<div id="adminPanel">
+    <div class="admin-content">
+        <h2>MASTER CONTROL V12</h2>
+        <div class="admin-field"><label>Jina la Shule</label><input id="in_name"></div>
+        <div class="admin-field"><label>Kauli Mbiu</label><input id="in_slogan"></div>
+        <div class="admin-field"><label>Simu</label><input id="in_phone"></div>
+        <div class="admin-field"><label>Email</label><input id="in_email"></div>
+        <div class="admin-field full-width"><label>Historia</label><textarea id="in_history" rows="2"></textarea></div>
+        <div class="admin-field"><label>Vision</label><textarea id="in_vision"></textarea></div>
+        <div class="admin-field"><label>Mission</label><textarea id="in_mission"></textarea></div>
+        <div class="admin-field full-width"><label>Habari Mpya</label><textarea id="in_news" rows="3"></textarea></div>
+        <div class="admin-field full-width">
+            <label>Data za Matokeo (Format: Index,Jina,Civ,Hist,Eng,Math,Avg,Remark | Tenganisha kwa New Line)</label>
+            <textarea id="in_results" rows="5"></textarea>
+        </div>
+        <button class="upload-label" style="border:none; width:100%" onclick="saveAll()">HIFADHI KILA KITU</button>
+        <button class="full-width" onclick="toggleAdmin()" style="background:none; cursor:pointer; border:none; color:red">GHAIRI</button>
+    </div>
+</div>
+
+<div class="slide-nav" id="dots"></div>
+
 <script>
-    let heroImgs = [];
-    let galleryImgs = [];
+    let db = JSON.parse(localStorage.getItem('nss_db_v12')) || {
+        name: "NGUNICHILE SMART SCHOOL", slogan: "ELIMU NI MWANGA WA MAISHA",
+        history: "Shule imara ya kutoa viongozi...", vision: "Kuwa bora zaidi...", mission: "Kutoa elimu bora...",
+        phone: "0700 000 000", email: "info@ngunichile.sc.tz",
+        news: "- Shule inafunguliwa hivi karibuni.\n- Lipia ada kwa wakati.",
+        results: "S4321/0001,Mwalimu Martini,A,A,A,A,A,EXCELLENT",
+        gallery: []
+    };
 
-    function toggleDark() { document.body.classList.toggle('dark-mode'); }
-    function openAdmin() { if(prompt("Nenosiri:") === "1234") { document.getElementById('adminPanel').style.display='block'; loadForm(); } }
-    function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
+    function saveAll() {
+        db.name = document.getElementById('in_name').value;
+        db.slogan = document.getElementById('in_slogan').value;
+        db.phone = document.getElementById('in_phone').value;
+        db.email = document.getElementById('in_email').value;
+        db.history = document.getElementById('in_history').value;
+        db.vision = document.getElementById('in_vision').value;
+        db.mission = document.getElementById('in_mission').value;
+        db.news = document.getElementById('in_news').value;
+        db.results = document.getElementById('in_results').value;
+        localStorage.setItem('nss_db_v12', JSON.stringify(db));
+        location.reload();
+    }
 
-    // Kusindika picha kuwa Data Strings (Hii inazihifadhi ndani ya Browser)
-    function processImages(type) {
-        const files = type === 'hero' ? document.getElementById('iHeroFiles').files : document.getElementById('iGalleryFiles').files;
-        const storage = [];
+    function updateUI() {
+        document.getElementById('disp_name').innerHTML = db.name.replace("SMART", "<span style='color:#ffcc00'>SMART</span>");
+        document.getElementById('disp_slogan').innerText = db.slogan;
+        document.getElementById('disp_history').innerText = db.history;
+        document.getElementById('disp_vision').innerText = db.vision;
+        document.getElementById('disp_mission').innerText = db.mission;
+        document.getElementById('disp_news').innerText = db.news;
+        document.getElementById('disp_phone').innerText = db.phone;
+        document.getElementById('disp_email').innerText = db.email;
         
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                storage.push(e.target.result);
-                if(type === 'hero') heroImgs = storage; else galleryImgs = storage;
-            };
-            reader.readAsDataURL(file);
+        document.getElementById('in_name').value = db.name;
+        document.getElementById('in_slogan').value = db.slogan;
+        document.getElementById('in_phone').value = db.phone;
+        document.getElementById('in_email').value = db.email;
+        document.getElementById('in_history').value = db.history;
+        document.getElementById('in_vision').value = db.vision;
+        document.getElementById('in_mission').value = db.mission;
+        document.getElementById('in_news').value = db.news;
+        document.getElementById('in_results').value = db.results;
+    }
+
+    function goToSlide(n) {
+        document.querySelectorAll('.section-slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('slide' + n).classList.add('active');
+        document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i+1 === n));
+    }
+
+    function toggleAdmin() {
+        const p = document.getElementById('adminPanel');
+        if(p.style.display === 'block') p.style.display = 'none';
+        else if(prompt("Password:") === "1234") p.style.display = 'block';
+    }
+
+    function renderResults() {
+        const b = document.getElementById('resultsBody');
+        b.innerHTML = "";
+        db.results.split('\n').forEach(line => {
+            if(!line.trim()) return;
+            let tr = document.createElement('tr');
+            line.split(',').forEach(text => {
+                let td = document.createElement('td');
+                td.innerText = text.trim();
+                tr.appendChild(td);
+            });
+            b.appendChild(tr);
         });
     }
 
-    function saveData() {
-        const d = {
-            name: document.getElementById('iName').value, slogan: document.getElementById('iSlogan').value,
-            phone: document.getElementById('iPhone').value, email: document.getElementById('iEmail').value,
-            fees: document.getElementById('iFees').value, reg: document.getElementById('iReg').value,
-            history: document.getElementById('iHistory').value, vision: document.getElementById('iVision').value,
-            mission: document.getElementById('iMission').value, subs: document.getElementById('iSubs').value,
-            achieve: document.getElementById('iAchieve').value, news: document.getElementById('iNews').value,
-            heroList: heroImgs.length > 0 ? heroImgs : JSON.parse(localStorage.getItem('ngunichile_v11'))?.heroList || [],
-            galList: galleryImgs.length > 0 ? galleryImgs : JSON.parse(localStorage.getItem('ngunichile_v11'))?.galList || []
-        };
-        localStorage.setItem('ngunichile_v11', JSON.stringify(d));
-        render(d);
-        closeAdmin();
-    }
-
-    function loadForm() {
-        const d = JSON.parse(localStorage.getItem('ngunichile_v11')) || {};
-        document.getElementById('iName').value = d.name || "";
-        document.getElementById('iSlogan').value = d.slogan || "";
-        document.getElementById('iHistory').value = d.history || "";
-        document.getElementById('iVision').value = d.vision || "";
-        document.getElementById('iMission').value = d.mission || "";
-        document.getElementById('iSubs').value = d.subs || "";
-        document.getElementById('iAchieve').value = d.achieve || "";
-        document.getElementById('iNews').value = d.news || "";
-        document.getElementById('iPhone').value = d.phone || "";
-        document.getElementById('iEmail').value = d.email || "";
-        document.getElementById('iFees').value = d.fees || "";
-        document.getElementById('iReg').value = d.reg || "";
-    }
-
-    function render(d) {
-        if(!d) return;
-        document.getElementById('dName').innerText = d.name;
-        document.getElementById('dSlogan').innerText = d.slogan;
-        document.getElementById('dHistory').innerText = d.history;
-        document.getElementById('dVision').innerText = d.vision;
-        document.getElementById('dMission').innerText = d.mission;
-        document.getElementById('dSubs').innerText = d.subs;
-        document.getElementById('dAchieve').innerText = d.achieve;
-        document.getElementById('dNews').innerText = d.news;
-        document.getElementById('dPh').innerText = d.phone;
-        document.getElementById('dEm').innerText = d.email;
-        document.getElementById('dFees').innerText = d.fees;
-        document.getElementById('dReg').innerText = d.reg;
-
-        // Background Slideshow Logic
-        if(d.heroList && d.heroList.length > 0) {
-            let i = 0;
-            const heroDiv = document.getElementById('dHero');
-            heroDiv.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${d.heroList[0]})`;
-            setInterval(() => {
-                i = (i + 1) % d.heroList.length;
-                heroDiv.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${d.heroList[i]})`;
-            }, 5000);
-        }
-
-        // Gallery Render
-        const gDiv = document.getElementById('dGallery');
-        gDiv.innerHTML = "";
-        if(d.galList) {
-            d.galList.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.className = 'gallery-item';
-                gDiv.appendChild(img);
-            });
+    function filterResults(val) {
+        let rows = document.getElementById('resultsBody').rows;
+        for(let row of rows) {
+            row.style.display = row.cells[0].innerText.toUpperCase().includes(val.toUpperCase()) ? "" : "none";
         }
     }
 
-    window.onload = () => render(JSON.parse(localStorage.getItem('ngunichile_v11')));
+    function handleUpload(e) {
+        for(let file of e.target.files) {
+            let r = new FileReader();
+            r.onload = (ev) => {
+                db.gallery.push(ev.target.result);
+                localStorage.setItem('nss_db_v12', JSON.stringify(db));
+                renderGallery();
+            };
+            r.readAsDataURL(file);
+        }
+    }
+
+    function renderGallery() {
+        const c = document.getElementById('disp_gallery');
+        c.innerHTML = "";
+        db.gallery.forEach((src, idx) => {
+            let d = document.createElement('div');
+            d.className = "gallery-img-card";
+            d.innerHTML = `<img src="${src}">`;
+            d.onclick = () => { if(confirm("Futa?")) { db.gallery.splice(idx,1); localStorage.setItem('nss_db_v12', JSON.stringify(db)); renderGallery(); } };
+            c.appendChild(d);
+        });
+    }
+
+    window.onload = () => {
+        updateUI();
+        renderResults();
+        renderGallery();
+        const d = document.getElementById('dots');
+        for(let i=1; i<=6; i++) {
+            let dot = document.createElement('div');
+            dot.className = i===1 ? 'nav-dot active' : 'nav-dot';
+            dot.onclick = () => goToSlide(i);
+            d.appendChild(dot);
+        }
+    };
 </script>
 </body>
 </html>
