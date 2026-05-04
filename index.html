@@ -3,241 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngunichile Smart School | Portal V17</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Ngunichile Secondary School | Ultimate Smart Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #002366; --accent: #ffcc00; --light: #f8fafc; --dark: #0f172a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--light); color: var(--dark); scroll-behavior: smooth; overflow-x: hidden; }
-
-        /* Navigation */
-        nav { background: var(--primary); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .logo { color: white; font-weight: 700; font-size: 24px; text-decoration: none; }
-        .logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { color: white; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        /* Hero Section */
-        .hero { height: 70vh; background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1523050853063-bd80e27433fb?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
-        .hero h1 { font-size: clamp(30px, 6vw, 60px); text-transform: uppercase; }
-        .hero p { font-size: clamp(16px, 2vw, 24px); color: var(--accent); margin-bottom: 20px; }
-
-        /* Sections */
-        section { padding: 80px 8%; }
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-size: 32px; color: var(--primary); position: relative; padding-bottom: 10px; }
-        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: var(--accent); }
-
-        /* Grid for 30 Features */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .f-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); transition: 0.3s; }
-        .f-card:hover { transform: translateY(-10px); }
-        .f-card i { font-size: 35px; color: var(--primary); margin-bottom: 15px; }
-
-        /* Portal Report (Yako ya kwanza) */
-        .portal-container { background: var(--primary); padding: 40px; border-radius: 20px; color: white; }
-        .search-area { display: flex; gap: 10px; margin-bottom: 30px; }
-        .search-area input { flex: 1; padding: 15px; border-radius: 10px; border: none; font-size: 16px; }
-        .results-table { width: 100%; background: white; color: var(--dark); border-radius: 10px; overflow: hidden; display: none; }
-        .results-table th, .results-table td { padding: 15px; border: 1px solid #eee; text-align: left; }
-        .results-table th { background: #f1f5f9; }
-
-        /* Gallery */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .gallery-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; cursor: pointer; transition: 0.3s; }
-        .gallery-img:hover { filter: brightness(0.7); }
-
-        /* Admin Panel Overlay */
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px; }
-        .admin-content { background: white; max-width: 900px; margin: 0 auto; padding: 40px; border-radius: 20px; }
-        .admin-content h2 { border-bottom: 3px solid var(--accent); margin-bottom: 20px; }
-        .admin-group { margin-bottom: 15px; }
-        .admin-group label { display: block; font-weight: bold; font-size: 13px; }
-        .admin-group input, .admin-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
-
-        /* Footer */
-        footer { background: var(--dark); color: white; padding: 60px 8%; text-align: center; }
-        .footer-socials { margin: 20px 0; font-size: 24px; display: flex; justify-content: center; gap: 20px; }
-
-        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .btn-accent { background: var(--accent); color: var(--dark); }
-        .btn-primary { background: var(--primary); color: white; }
-
-        @media (max-width: 768px) { .nav-links { display: none; } }
+        :root { --p: #002366; --s: #ffcc00; --bg: #f4f7f6; --card: #ffffff; --txt: #1a1a1a; }
+        .dark-mode { --bg: #0f172a; --card: #1e293b; --txt: #f8fafc; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--txt); transition: 0.4s; }
+        header { background: var(--p); color: white; position: sticky; top:0; z-index:1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .top-bar { background: #001a4d; padding: 8px 5%; display: flex; justify-content: space-between; font-size: 13px; }
+        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { color: var(--s); font-size: 24px; font-weight: 800; }
+        .nav-btns button, .nav-btns a { background: var(--s); color: var(--p); border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; margin-left: 10px; font-size: 13px; }
+        .hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
+        .content { max-width: 1200px; margin: -60px auto 40px; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .section-card { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.05); }
+        .section-card h3 { color: var(--p); margin-bottom: 20px; display: flex; align-items: center; font-size: 1.3rem; border-bottom: 3px solid var(--s); width: fit-content; padding-bottom: 5px; }
+        .camera-box { text-align: center; margin-bottom: 20px; background: #000; border-radius: 15px; overflow: hidden; }
+        #video { width: 100%; display: none; transform: none; } /* Ondoa mirror effect */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
+        .gallery-item { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; border: 2px solid #ddd; }
+        #adminPanel { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; overflow-y:auto; padding:20px; }
+        .admin-box { background:white; max-width:900px; margin:0 auto; padding:30px; border-radius:20px; color:#333; display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+        .full { grid-column: 1 / -1; }
+        input, textarea { width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; }
+        .save-btn { background:#22c55e; color:white; border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer; grid-column:1 / -1; }
+        @media (max-width: 850px) { .content { grid-template-columns: 1fr; } .admin-box { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<nav>
-    <a href="#" class="logo">NGUNICHILE<span> SMART</span></a>
-    <div class="nav-links">
-        <a href="#about">KUHUSU</a>
-        <a href="#academics">TAALUMA</a>
-        <a href="#portal">PORTAL</a>
-        <a href="#gallery">PICHA</a>
-        <a href="#contact">WASILIANA</a>
-        <a href="javascript:void(0)" onclick="openAdmin()" style="color:var(--accent)"><i class="fa fa-lock"></i> LOGIN</a>
+<header>
+    <div class="top-bar">
+        <div><i class="fas fa-phone-alt"></i> <span id="dPhone">...</span> | <i class="fas fa-envelope"></i> <span id="dEmail">...</span></div>
+        <div><button onclick="toggleDark()" style="background:none; color:white; border:none; cursor:pointer;"><i class="fas fa-moon"></i></button></div>
     </div>
-</nav>
+    <nav>
+        <div class="logo"><h1 id="dName">NGUNICHILE</h1></div>
+        <div class="nav-btns">
+            <button onclick="openAdmin()"><i class="fas fa-user-shield"></i> ADMIN</button>
+        </div>
+    </nav>
+</header>
 
-<div class="hero">
-    <h1 id="d_name">NGUNICHILE SECONDARY SCHOOL</h1>
-    <p id="d_slogan">ELIMU NI MWANGA WA MAISHA</p>
-    <div class="footer-socials">
-        <i class="fab fa-facebook"></i><i class="fab fa-instagram"></i><i class="fab fa-whatsapp"></i>
-    </div>
+<div class="hero" id="dHero">
+    <h2 id="dWelcome">Ngunichile Secondary</h2>
+    <p id="dSlogan">Elimu ni Mwanga wa Maisha</p>
 </div>
 
-<section id="about">
-    <div class="section-header"><h2>Utambulisho wa Shule</h2></div>
-    <div class="features-grid">
-        <div class="f-card"><h3><i class="fa fa-history"></i> Historia</h3><p id="d_history">Historia yetu inatoka mbali...</p></div>
-        <div class="f-card"><h3><i class="fa fa-eye"></i> Dira (Vision)</h3><p id="d_vision">Kuwa shule bora ya mfano Tanzania.</p></div>
-        <div class="f-card"><h3><i class="fa fa-bullseye"></i> Dhamira</h3><p id="d_mission">Kutoa elimu bora kwa kutumia teknolojia.</p></div>
-        <div class="f-card"><h3><i class="fa fa-users"></i> Uongozi</h3><p>Mwalimu Mkuu: Martini<br>Mhazini: Leah Mndasha</p></div>
-    </div>
-</section>
+<div class="content">
+    <main>
+        <section class="section-card">
+            <h3><i class="fas fa-university"></i> Kuhusu Shule</h3>
+            <p id="dHistory">Historia...</p>
+            <p><strong>Vision:</strong> <span id="dVision">...</span></p>
+            <p><strong>Mission:</strong> <span id="dMission">...</span></p>
+        </section>
 
-<section id="portal" style="background: #e2e8f0;">
-    <div class="section-header"><h2>Ngunichile Report Portal</h2></div>
-    <div class="portal-container">
-        <h3>ANGALIA MATOKEO HAPA</h3>
-        <p style="margin-bottom: 20px; opacity: 0.8;">Ingiza Index Number (Mfano: S4321/0001)</p>
-        <div class="search-area">
-            <input type="text" id="searchInput" placeholder="Search Index Number...">
-            <button class="btn btn-accent" onclick="searchStudent()">TAFUTA</button>
-        </div>
-        <div class="results-table" id="resTable">
-            <table>
-                <thead>
-                    <tr><th>Index No</th><th>Jina kamili</th><th>Wastani</th><th>Daraja</th><th>Maoni</th></tr>
-                </thead>
-                <tbody id="resBody"></tbody>
-            </table>
-        </div>
-    </div>
-</section>
+        <section class="section-card">
+            <h3><i class="fas fa-camera"></i> Camera ya Shule (Mazingira)</h3>
+            <div class="camera-box">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas" style="display:none;"></canvas>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="nav-btns" onclick="startCamera()"><i class="fas fa-video"></i> Washa Camera ya Nyuma</button>
+                <button id="snapBtn" class="nav-btns" style="background:#ef4444; color:white; display:none;" onclick="takePhoto()"><i class="fas fa-circle"></i> Piga Picha</button>
+            </div>
+            <div id="dGallery" class="gallery-grid"></div>
+        </section>
+    </main>
 
-<section id="gallery">
-    <div class="section-header"><h2>Gallery ya Shule</h2></div>
-    <div class="gallery-grid" id="d_gallery"></div>
-</section>
-
-<section id="contact">
-    <div class="section-header"><h2>Wasiliana Nasi</h2></div>
-    <div class="features-grid">
-        <div class="f-card"><i class="fa fa-phone"></i><p id="d_phone">0700 000 000</p></div>
-        <div class="f-card"><i class="fa fa-envelope"></i><p id="d_email">info@ngunichile.com</p></div>
-        <div class="f-card"><i class="fa fa-map-marker-alt"></i><p>Tanga, Tanzania</p></div>
-    </div>
-</section>
+    <aside>
+        <section class="section-card">
+            <h3><i class="fas fa-bullhorn"></i> Habari</h3>
+            <div id="dNews"></div>
+        </section>
+        <section class="section-card">
+            <h3><i class="fas fa-id-card"></i> Ada & Usajili</h3>
+            <p id="dFees">...</p>
+        </section>
+    </aside>
+</div>
 
 <div id="adminPanel">
-    <div class="admin-content">
-        <h2>Smart Admin Dashboard</h2>
-        <div class="admin-group"><label>Jina la Shule</label><input id="i_name"></div>
-        <div class="admin-group"><label>Kauli Mbiu</label><input id="i_slogan"></div>
-        <div class="admin-group"><label>Historia</label><textarea id="i_history"></textarea></div>
-        <div class="admin-group"><label>Phone</label><input id="i_phone"></div>
-        <div class="admin-group"><label>Data za Matokeo (Format: Index,Jina,Wastani,Daraja,Maoni)</label>
-            <textarea id="i_results" rows="5" placeholder="S4321/0001,Martini,85,A,Hongera sana"></textarea>
-        </div>
-        <div class="admin-group">
-            <label>Attach Gallery Photos</label>
-            <input type="file" id="imgUp" multiple accept="image/*" onchange="handleImgs(event)">
-        </div>
-        <div style="display: flex; gap: 10px;">
-            <button class="btn btn-primary" onclick="saveAll()">HIFADHI KILA KITU</button>
-            <button class="btn" style="background: red; color:white;" onclick="document.getElementById('adminPanel').style.display='none'">FUNGA</button>
-        </div>
+    <div class="admin-box">
+        <h2 class="full">Admin Panel</h2>
+        <div class="f-group"><label>Jina la Shule:</label><input id="iName"></div>
+        <div class="f-group"><label>Phone:</label><input id="iPhone"></div>
+        <div class="f-group full"><label>Historia:</label><textarea id="iHistory"></textarea></div>
+        <div class="f-group full"><label>Habari:</label><textarea id="iNews"></textarea></div>
+        <div class="f-group full"><label>Gallery (Links):</label><textarea id="iGallery"></textarea></div>
+        <button class="save-btn" onclick="saveMaster()">HIFADHI</button>
+        <button class="full" onclick="closeAdmin()">Funga</button>
     </div>
 </div>
 
-<footer>
-    <div class="footer-socials">
-        <i class="fab fa-facebook"></i><i class="fab fa-twitter"></i><i class="fab fa-youtube"></i><i class="fab fa-linkedin"></i>
-    </div>
-    <p>&copy; 2026 Ngunichile Smart School. SSL Protected & SEO Optimized.</p>
-</footer>
-
 <script>
-    let db = JSON.parse(localStorage.getItem('ngunichile_v17_db')) || {
-        name: "NGUNICHILE SECONDARY SCHOOL", slogan: "ELIMU NI MWANGA WA MAISHA",
-        history: "Ngunichile Secondary School ni shule inayojali maendeleo ya mwanafunzi.",
-        phone: "0755 000 000", email: "info@ngunichile.sc.tz",
-        results: "S4321/0001,Mwalimu Martini,90,A,Excellent Work",
-        gallery: []
-    };
+    function toggleDark() { document.body.classList.toggle('dark-mode'); }
+    function openAdmin() { if(prompt("Pass:") === "1234") { document.getElementById('adminPanel').style.display='block'; loadInputs(); } }
+    function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
 
-    function openAdmin() { if(prompt("Password:") === "1234") document.getElementById('adminPanel').style.display='block'; }
-
-    function saveAll() {
-        db.name = document.getElementById('i_name').value;
-        db.slogan = document.getElementById('i_slogan').value;
-        db.history = document.getElementById('i_history').value;
-        db.phone = document.getElementById('i_phone').value;
-        db.results = document.getElementById('i_results').value;
-        localStorage.setItem('ngunichile_v17_db', JSON.stringify(db));
-        location.reload();
+    function saveMaster() {
+        const d = {
+            name: document.getElementById('iName').value,
+            phone: document.getElementById('iPhone').value,
+            history: document.getElementById('iHistory').value,
+            news: document.getElementById('iNews').value,
+            gallery: document.getElementById('iGallery').value
+        };
+        localStorage.setItem('ngunichile_v9', JSON.stringify(d));
+        applyData(d);
+        closeAdmin();
     }
 
-    function searchStudent() {
-        const val = document.getElementById('searchInput').value.toLowerCase();
-        const body = document.getElementById('resBody');
-        const table = document.getElementById('resTable');
-        body.innerHTML = "";
-        
-        let lines = db.results.split('\n');
-        let found = false;
-        lines.forEach(line => {
-            let p = line.split(',');
-            if(p[0] && p[0].toLowerCase().includes(val) && val !== "") {
-                body.innerHTML += `<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td></tr>`;
-                found = true;
-            }
-        });
-        table.style.display = found ? "table" : "none";
+    function loadInputs() {
+        const d = JSON.parse(localStorage.getItem('ngunichile_v9')) || {};
+        document.getElementById('iName').value = d.name || "";
+        document.getElementById('iPhone').value = d.phone || "";
+        document.getElementById('iHistory').value = d.history || "";
+        document.getElementById('iNews').value = d.news || "";
+        document.getElementById('iGallery').value = d.gallery || "";
     }
 
-    function handleImgs(e) {
-        for(let file of e.target.files) {
-            let r = new FileReader();
-            r.onload = (ev) => {
-                db.gallery.push(ev.target.result);
-                localStorage.setItem('ngunichile_v17_db', JSON.stringify(db));
-                renderGallery();
-            };
-            r.readAsDataURL(file);
+    function applyData(d) {
+        if(!d) return;
+        document.getElementById('dName').innerText = d.name;
+        document.getElementById('dHistory').innerText = d.history;
+        document.getElementById('dNews').innerText = d.news;
+        const gal = document.getElementById('dGallery');
+        gal.innerHTML = "";
+        if(d.gallery) {
+            d.gallery.split(',').forEach(link => {
+                const img = document.createElement('img');
+                img.src = link.trim();
+                img.className = 'gallery-item';
+                gal.appendChild(img);
+            });
         }
     }
 
-    function renderGallery() {
-        const d = document.getElementById('d_gallery');
-        d.innerHTML = "";
-        db.gallery.forEach((src, i) => {
-            let img = document.createElement('img');
-            img.src = src; img.className = 'gallery-img';
-            img.onclick = () => { if(confirm("Futa picha?")) { db.gallery.splice(i,1); localStorage.setItem('ngunichile_v17_db', JSON.stringify(db)); renderGallery(); } };
-            d.appendChild(img);
-        });
+    // CAMERA LOGIC ILIYOBORESHWA (REAR CAMERA)
+    async function startCamera() {
+        try {
+            const constraints = {
+                video: { facingMode: { exact: "environment" } } // Hii inalazimisha Camera ya Nyuma
+            };
+            // Kama "environment" ikigoma (kwenye baadhi ya PC), inafungua camera yoyote iliyopo
+            const stream = await navigator.mediaDevices.getUserMedia(constraints).catch(() => {
+                return navigator.mediaDevices.getUserMedia({ video: true });
+            });
+            
+            const video = document.getElementById('video');
+            video.srcObject = stream;
+            video.style.display = 'block';
+            document.getElementById('snapBtn').style.display = 'inline-block';
+        } catch (e) {
+            alert("Inashindwa kufungua Camera ya Nyuma. Hakikisha umeruhusu Camera.");
+        }
     }
 
-    window.onload = () => {
-        document.getElementById('d_name').innerText = db.name;
-        document.getElementById('d_slogan').innerText = db.slogan;
-        document.getElementById('d_history').innerText = db.history;
-        document.getElementById('d_phone').innerText = db.phone;
-        
-        document.getElementById('i_name').value = db.name;
-        document.getElementById('i_slogan').value = db.slogan;
-        document.getElementById('i_history').value = db.history;
-        document.getElementById('i_phone').value = db.phone;
-        document.getElementById('i_results').value = db.results;
-        renderGallery();
+    function takePhoto() {
+        const canvas = document.getElementById('canvas');
+        const video = document.getElementById('video');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const imgUrl = canvas.toDataURL('image/png');
+        const img = document.createElement('img');
+        img.src = imgUrl;
+        img.className = 'gallery-item';
+        document.getElementById('dGallery').prepend(img);
     }
+
+    window.onload = () => applyData(JSON.parse(localStorage.getItem('ngunichile_v9')));
 </script>
 </body>
 </html>
